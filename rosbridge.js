@@ -2,7 +2,7 @@
 
 var ROSLIB 		  = require('roslib');
 // const eventemitter    = require('eventemitter2');
-
+var valid_phrases;
 
 var ros = new ROSLIB.Ros({
     url : 'ws://localhost:9090'
@@ -25,20 +25,18 @@ ros.on('error', function(error) {
 var phrases_listener = new ROSLIB.Topic({
     ros : ros,
     name : '/AlexaValidPhrases',
-    messageType : 'std_msgs/String'
+    messageType : 'api_ros_controller/CurrentOptions'
 });
 
 //callback function will update a var array holding valid phrases
 phrases_listener.subscribe(function(message) {
-    console.log('Updating valid phrases from ' + listener.name + ': ' + message.data);
-    var valid_phrases = message.data.split(',');
+    console.log('Updating valid phrases from ' + phrases_listener.name + ': ' + message.data);
+    valid_phrases = message.data; //.split(',')
+    console.log(valid_phrases)
     // listener.unsubscribe();
 });
 
-//implement function that will return array of current valid phrases
-function returnValidPhrases(){
-    return valid_phrases;
-}
+
 
 // Creating publisher
 var command_publisher = new ROSLIB.Topic({
@@ -47,13 +45,34 @@ var command_publisher = new ROSLIB.Topic({
     messageType : 'std_msgs/String'
 });
 
+var test = new ROSLIB.Message({
+    data : 'test_publish'
+});
 
-// publishing command (called from lambda.js)
-function publishCommand(command){
-    var command_to_publish = new ROSLIB.Message({
-        data : command
-    });
-    command_publisher.publish(command_to_publish);
-}
+// command_publisher.publish(test);
 
+module.exports = {
+    returnValidPhrases: function() {
+        return valid_phrases;
+    },
+    publishCommand: function(command){
+        var command_to_publish = new ROSLIB.Message({
+            data : command
+        });
+        command_publisher.publish(command_to_publish);
+    }
+};
+// //implement function that will return array of current valid phrases
+// function returnValidPhrases(){
+//     return valid_phrases;
+// }
+//
+// // publishing command (called from lambda.js)
+// function publishCommand(command){
+//     var command_to_publish = new ROSLIB.Message({
+//         data : command
+//     });
+//     command_publisher.publish(command_to_publish);
+// }
+//
 

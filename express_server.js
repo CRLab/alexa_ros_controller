@@ -9,7 +9,7 @@ var   roslib 		  = require('roslib');
 // const eventemitter    = require('eventemitter2');
 
 // lambda.js contains the lambda function for Alexa as in http://github.com/alexa/alexa-skills-kit-sdk-for-nodejs
-var   lambda          = require('./lambda');
+var   lambda          = require('./lambda.js');
 
 const SERVER_PORT     = 3000;
 const SERVER_IP       = 'localhost';
@@ -32,9 +32,8 @@ app.post('', function (req, res) {
     var ctx = context();
     lambda.handler(req.body,ctx);
     ctx.Promise
-        .then(resp => {  return res.status(200).json(resp); })
-        .catch(err => {  console.log(err);//add your error handling stuff })
-})
+        .then(function(resp) {  return res.status(200).json(resp); })
+        .catch(function(err) {  console.log(err); });
 });
 
 var httpServer = http.createServer(app);
