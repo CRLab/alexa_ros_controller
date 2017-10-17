@@ -1,10 +1,12 @@
 'use strict';
 
 const express         = require('express');
-const http           = require('http');
+const http            = require('http');
 const fs              = require('fs');
 const bodyParser      = require('body-parser');
 const context 		  = require('aws-lambda-mock-context');
+var   roslib 		  = require('roslib');
+// const eventemitter    = require('eventemitter2');
 
 // lambda.js contains the lambda function for Alexa as in http://github.com/alexa/alexa-skills-kit-sdk-for-nodejs
 var   lambda          = require('./lambda');
@@ -22,6 +24,8 @@ const SERVER_IP       = 'localhost';
 const app = express();
 
 app.use(bodyParser.json({ type: 'application/json' }));
+
+
 
 // your service will be available on <YOUR_IP>/alexa
 app.post('', function (req, res) {
