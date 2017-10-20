@@ -1,7 +1,6 @@
 'use strict';
 
 var ROSLIB 		  = require('roslib');
-// const eventemitter    = require('eventemitter2');
 var valid_phrases;
 
 var ros = new ROSLIB.Ros({
@@ -24,15 +23,15 @@ ros.on('error', function(error) {
 // Creating subscriber
 var phrases_listener = new ROSLIB.Topic({
     ros : ros,
-    name : '/AlexaValidPhrases',
+    name : '/CurrentOptions',
     messageType : 'api_ros_controller/CurrentOptions'
 });
 
 //callback function will update a var array holding valid phrases
 phrases_listener.subscribe(function(message) {
-    console.log('Updating valid phrases from ' + phrases_listener.name + ': ' + message.data);
+    console.log('Current valid options from ' + phrases_listener.name + ': ' + message.data);
     valid_phrases = message.data; //.split(',')
-    console.log(valid_phrases)
+    // console.log(valid_phrases)
     // listener.unsubscribe();
 });
 
@@ -41,13 +40,20 @@ phrases_listener.subscribe(function(message) {
 // Creating publisher
 var command_publisher = new ROSLIB.Topic({
     ros : ros,
-    name : '/AlexaDetectedPhrases',
+    name : '/ExecuteOption',
     messageType : 'std_msgs/String'
 });
 
-var test = new ROSLIB.Message({
-    data : 'test_publish'
+var currently_selected_publisher = new ROSLIB.Topic({
+    ros : ros,
+    name : '/CurrentlySelectedOption',
+    messageType : 'std_msgs/String'
 });
+
+//
+// var test = new ROSLIB.Message({
+//     data : 'test_publish'
+// });
 
 // command_publisher.publish(test);
 

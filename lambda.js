@@ -27,7 +27,6 @@ var handlers = {
     "SendCommandIntent": function () {
         const commandSlot = this.event.request.intent.slots.Command;
         var commandName;
-        // var validPhrases = ["next grasp","select grasp","plan new grasps","back"]; //get it from rosbridge
         var validPhrases = rosbridge.returnValidPhrases();
         console.log("phrases: " + validPhrases);
 

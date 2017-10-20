@@ -6,7 +6,6 @@ const fs              = require('fs');
 const bodyParser      = require('body-parser');
 const context 		  = require('aws-lambda-mock-context');
 var   roslib 		  = require('roslib');
-// const eventemitter    = require('eventemitter2');
 
 // lambda.js contains the lambda function for Alexa as in http://github.com/alexa/alexa-skills-kit-sdk-for-nodejs
 var   lambda          = require('./lambda.js');
@@ -39,5 +38,5 @@ app.post('', function (req, res) {
 var httpServer = http.createServer(app);
 
 httpServer.listen(SERVER_PORT, SERVER_IP,function (){
-    console.log('Alexa Skill service ready on ' + SERVER_IP+":"+SERVER_PORT+" via http. Be happy!");
+    console.log('Alexa Skill service ready on ' + SERVER_IP+":"+SERVER_PORT+" via http.");
 });
