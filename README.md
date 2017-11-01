@@ -17,7 +17,12 @@ This listens for json's sent by Amazon Alexa on localhost
 port 3000. Amazon Alexa json's are forwarded there via ngrok, so make sure
 that's set up correctly on the Amazon Developer Portal. 
 
-###API
+You can feed test data from a ROS machine like so:
+
+    rostopic pub -r .1 /CurrentOptions external_controller_msgs/CurrentOptions '{data: ["next grasp", "back", "select grasp", "test"]}'
+
+
+### API
 
 Uses an API of three ROS topics:
 
