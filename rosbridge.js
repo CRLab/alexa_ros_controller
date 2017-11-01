@@ -24,7 +24,7 @@ ros.on('error', function(error) {
 var phrases_listener = new ROSLIB.Topic({
     ros : ros,
     name : '/CurrentOptions',
-    messageType : 'api_ros_controller/CurrentOptions'
+    messageType : 'external_controller_msgs/CurrentOptions'
 });
 
 //callback function will update a var array holding valid phrases
